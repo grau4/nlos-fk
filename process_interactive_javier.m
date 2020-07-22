@@ -1,5 +1,6 @@
 % This code is a series of snipets from "demo.m" and %"cnlos_reconstruction.m", and mariko's code stiched together 
-% The code saves trimmed and rectified "meas_32.mat" files, ready to be used
+% for processing the "interactive" sequence
+% The code saves trimmed and rectified separate ".mat" files, ready to be used
 %
 %
 % Author: Javier Grau
