@@ -7,7 +7,6 @@ Author: Javier Grau
 import os
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
 import scipy.misc
 from pfm_lib import load_pfm
 import glob
@@ -36,7 +35,8 @@ if __name__=='__main__':
 		t_bins = img_frame.shape[0]
 		frame = img_frame / np.max(img_frame) * 256
 		frame = frame.astype('uint8')
-		frame_crop = frame[:,256:768]
+		#frame_crop = frame[:,256:768]
+		frame_crop = frame
 		
 		# store png
 		path, filename = img.split('\\')
@@ -45,8 +45,8 @@ if __name__=='__main__':
 	
 	# format output video
 	pngs = os.listdir(pngs_dir)
-	width = (res*res)//2
-	height = t_bins
+	width = frame_crop.shape[1]
+	height = frame_crop.shape[0]
 	fps = 4
 	seq_name = 'interactive_rect_video'
 	video_name = seq_name + '.avi'
