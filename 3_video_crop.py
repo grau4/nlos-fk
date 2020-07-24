@@ -16,8 +16,8 @@ if __name__=='__main__':
 
 	#*********************RETRIEVE SUBSET OF FRAMES*********************#
 	# params
-	t_effective = 32 # seconds
-	t0 = 30
+	t_effective = 32.5 # seconds
+	t0 = 29
 
 	# dir for crop video
 	crops_dir = 'crop_pngs/'
