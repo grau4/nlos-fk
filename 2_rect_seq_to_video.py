@@ -17,8 +17,7 @@ if __name__=='__main__':
 	res = 32
 	
 	# dirs
-	seq_path = 'interactive_rectified/'
-	#imgs = os.listdir(seq_path)
+	seq_path = 'interactive_rect/'
 	imgs = glob.glob(seq_path+'*.pfm')
 	
 	# pngs dir for video
@@ -27,6 +26,7 @@ if __name__=='__main__':
 		os.mkdir(pngs_dir)
 	
 	# load pfm's and save as png frames
+	print('Processing frames...')
 	for img in imgs:
 		# load
 		img_frame = load_pfm(img) # (time_bins, 1024)
@@ -48,7 +48,7 @@ if __name__=='__main__':
 	width = frame_crop.shape[1]
 	height = frame_crop.shape[0]
 	fps = 4
-	seq_name = 'interactive_rect_video'
+	seq_name = 'interactive_rect'
 	video_name = seq_name + '.avi'
 	cap = cv2.VideoCapture(0)
 	fourcc = cv2.VideoWriter_fourcc(*'XVID')

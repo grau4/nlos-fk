@@ -14,15 +14,15 @@ import glob
 
 if __name__=='__main__':
 
-	#*********************RETRIEVE SUBSET OF FRAMES*********************#
+	############## RETRIEVE SUBSET OF FRAMES ###################
 	# params
 	t_effective = 32.5 # seconds
 	t0 = 29
 
 	# dir for crop video
-	crops_dir = 'crop_pngs/'
-	if not os.path.exists(crops_dir):
-		os.mkdir(crops_dir)
+	cut_dir = 'cut_pngs/'
+	if not os.path.exists(cut_dir):
+		os.mkdir(cut_dir)
 	
 	# open video file
 	cap= cv2.VideoCapture('video_32.mov')
@@ -31,7 +31,7 @@ if __name__=='__main__':
 	width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 	height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 	
-	# frame crop
+	# frame cut
 	start_fr = t0 * fps
 	end_fr = start_fr + t_effective * fps
 	i=0
@@ -41,16 +41,16 @@ if __name__=='__main__':
 			break
 		if (i>=start_fr and i<=end_fr):
 			i
-			cv2.imwrite(crops_dir + str(i).zfill(4)+'.png',frame)
+			cv2.imwrite(cut_dir + str(i).zfill(4)+'.png',frame)
 		i+=1
 	cap.release()
 	cv2.destroyAllWindows()
 	
 	
-	#*********************RENDER CROPPED VIDEO*********************#
+	############## RENDER CUT VIDEO ##############
 	# format output video
-	pngs = os.listdir(crops_dir)
-	seq_name = 'crop_interactive_video'
+	pngs = os.listdir(cut_dir)
+	seq_name = 'interactive_cut'
 	video_name = seq_name + '.avi'
 	
 	cap2 = cv2.VideoCapture(0)
@@ -60,7 +60,7 @@ if __name__=='__main__':
 	# make video from png's
 	print('Rendering Video...')
 	for png in pngs:
-		img_frame = cv2.imread(crops_dir+png)
+		img_frame = cv2.imread(cut_dir+png)
 		video.write(img_frame)
 	cv2.destroyAllWindows()
 	video.release()

@@ -41,11 +41,11 @@ def compute_occup_prob(x,m,b):
 
 
 if __name__=='__main__':
-	src_dir = 'interactive_rectified/'
+	src_dir = 'interactive_rect/'
 	filepaths = glob.glob(src_dir+'*.mat')
 	
 	# pngs dir for video
-	dest_dir = 'interactive_rectified_padded/'
+	dest_dir = 'interactive_rect_pad/'
 	if not os.path.exists(dest_dir):
 		os.mkdir(dest_dir)
 	

@@ -9,7 +9,7 @@ import glob
 from pfm_lib import save_pfm
 
 if __name__=='__main__':
-	data_dir = 'interactive_rectified/'
+	data_dir = 'interactive_rect/'
 	filepaths = glob.glob(data_dir+'*.mat')
 	
 	for filepath in filepaths:
