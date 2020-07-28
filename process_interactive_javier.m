@@ -43,7 +43,6 @@ for frame_idx=1:130
     % Permute data dimensions
     data = permute(frame,[3 2 1]);
 
-    filename = sprintf('interactive_rectified/%03d.mat', frame_idx);
-    %save filename data
+    filename = sprintf('interactive_rect/%03d.mat', frame_idx);
     save(filename, 'data');
 end
