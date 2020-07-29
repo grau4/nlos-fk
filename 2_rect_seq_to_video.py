@@ -15,15 +15,28 @@ if __name__=='__main__':
 	
 	#params
 	res = 32
+	exposure=3.0
 	
 	# dirs
-	seq_path = 'interactive_rect/'
+	seq_path = 'interactive_rect_pad/'
 	imgs = glob.glob(seq_path+'*.pfm')
 	
 	# pngs dir for video
 	pngs_dir = seq_path+'pngs/'
 	if not os.path.exists(pngs_dir):
 		os.mkdir(pngs_dir)
+	
+	# find maximum pixel value in whole dataset
+	max_pix = 0
+	for img in imgs:
+		img_frame = load_pfm(img)
+		max_of_frame = np.max(img_frame)
+		
+		if max_of_frame>max_pix:
+			max_pix = max_of_frame
+	
+	max_val = max_pix/exposure
+	
 	
 	# load pfm's and save as png frames
 	print('Processing frames...')
@@ -35,20 +48,19 @@ if __name__=='__main__':
 		t_bins = img_frame.shape[0]
 		frame = img_frame / np.max(img_frame) * 256
 		frame = frame.astype('uint8')
-		#frame_crop = frame[:,256:768]
 		frame_crop = frame
 		
 		# store png
 		path, filename = img.split('\\')
 		img_name, ext = filename.split('.')
-		scipy.misc.toimage(frame_crop, cmin=np.min(frame), cmax=np.max(frame)).save(pngs_dir+img_name+'.png')	
+		scipy.misc.toimage(frame_crop, cmin=0, cmax=max_val).save(pngs_dir+img_name+'.png')	
 	
 	# format output video
 	pngs = os.listdir(pngs_dir)
 	width = frame_crop.shape[1]
 	height = frame_crop.shape[0]
 	fps = 4
-	seq_name = 'interactive_rect'
+	seq_name = 'interactive_rect_'+'exp='+str(exposure)
 	video_name = seq_name + '.avi'
 	cap = cv2.VideoCapture(0)
 	fourcc = cv2.VideoWriter_fourcc(*'XVID')
