@@ -15,10 +15,10 @@ if __name__=='__main__':
 	
 	#params
 	res = 32
-	exposure=3.0
+	exposure=10.0
 	
 	# dirs
-	seq_path = 'interactive_rect_pad/'
+	seq_path = 'interactive_rect_Pad/'
 	imgs = glob.glob(seq_path+'*.pfm')
 	
 	# pngs dir for video
@@ -43,6 +43,11 @@ if __name__=='__main__':
 	for img in imgs:
 		# load
 		img_frame = load_pfm(img) # (time_bins, 1024)
+		
+		# xy reshaping
+		img_frame = np.reshape(img_frame, (1024, 32, 32))
+		img_frame = img_frame.transpose(0,2,1)
+		img_frame = np.reshape(img_frame, (1024, 1024))
 		
 		# format
 		t_bins = img_frame.shape[0]
