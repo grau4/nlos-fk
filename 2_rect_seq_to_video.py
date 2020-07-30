@@ -8,6 +8,7 @@ import os
 import numpy as np
 import cv2
 import scipy.misc
+from PIL import Image, ImageEnhance
 from pfm_lib import load_pfm
 import glob
 
@@ -15,14 +16,14 @@ if __name__=='__main__':
 	
 	#params
 	res = 32
-	exposure=10.0
+	exposure = 7.0
 	
 	# dirs
 	seq_path = 'interactive_rect_Pad/'
 	imgs = glob.glob(seq_path+'*.pfm')
 	
 	# pngs dir for video
-	pngs_dir = seq_path+'pngs/'
+	pngs_dir = seq_path+'pngs_enhance/'
 	if not os.path.exists(pngs_dir):
 		os.mkdir(pngs_dir)
 	
@@ -51,14 +52,20 @@ if __name__=='__main__':
 		
 		# format
 		t_bins = img_frame.shape[0]
-		frame = img_frame / np.max(img_frame) * 256
+		#frame = img_frame / np.max(img_frame) * 256
+		frame = img_frame / max_val * 256
 		frame = frame.astype('uint8')
 		frame_crop = frame
 		
 		# store png
 		path, filename = img.split('\\')
 		img_name, ext = filename.split('.')
-		scipy.misc.toimage(frame_crop, cmin=0, cmax=max_val).save(pngs_dir+img_name+'.png')	
+		
+		pil_img = Image.fromarray(frame)
+		enhancer = ImageEnhance.Brightness(pil_img)
+		im_out = enhancer.enhance(5)
+		im_out.save(pngs_dir+img_name+'.png')
+		#scipy.misc.toimage(frame_crop, cmin=0, cmax=max_val).save(pngs_dir+img_name+'.png')	
 	
 	# format output video
 	pngs = os.listdir(pngs_dir)
